@@ -30,7 +30,7 @@ public class Program {
 
             switch (opcao.toLowerCase()) {
                 case "s" -> {
-                    fazerLogin();
+                    fazerLogin(formacao);
                 }
                 case "n" -> {
                     realizaMatricula(formacao);

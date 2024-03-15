@@ -1,8 +1,10 @@
 package services;
 
 import application.Program;
+import entities.Formação;
 import entities.Usuário;
 
+import static services.ConteudoServico.gerenciaConteudos;
 import static services.FormacaoServico.usuárioList;
 import static utils.Utilidade.imprimeMensagem;
 import static utils.Utilidade.sc;
@@ -19,7 +21,7 @@ public class UsuarioServico {
         }
         return usuário;
     }
-    public static boolean fazerLogin(){
+    public static boolean fazerLogin(Formação formação){
         imprimeMensagem("Digite o seu número identificador:");
         System.out.println("Número :");
         int id = sc.nextInt();
@@ -35,6 +37,7 @@ public class UsuarioServico {
 
             if(login.equals(usuário.getLogin()) && senha.equals(usuário.getSenha())){
                 System.out.println("Login realizado com sucesso.\n");
+                lidaComUsuário(usuário, formação);
                 return true;
             }
             else{
@@ -47,12 +50,12 @@ public class UsuarioServico {
             return false;
         }
     }
-    private static void lidaComUsuário(Usuário usuário){
+    private static void lidaComUsuário(Usuário usuário, Formação formação){
         boolean saiu = false;
         imprimeMensagem("Seja bem-vindo(a) à nossa plataforma, caríssimo(a) " + usuário.getNome() + "\n");
         do {
-            System.out.println("O que temos para hoje?\n");
-            System.out.println("1 - Visualizar dados\n" +
+            System.out.println("O que temos para hoje?\n" +
+                    "           1 - Visualizar dados\n" +
                     "           2 - Alterar dados\n" +
                     "           3 - Ir para conteúdo\n" +
                     "           4 - Visualizar conteúdos já finalizados\n" +
@@ -68,7 +71,7 @@ public class UsuarioServico {
                     alterarDados(usuário);
                 }
                 case 3 -> {
-
+                    gerenciaConteudos(usuário, formação);
                 }
                 case 4 -> {
 

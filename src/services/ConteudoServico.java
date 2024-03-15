@@ -16,15 +16,13 @@ public class ConteudoServico {
 
     public static List<Formação> armazenaConteudos(){
         List<Formação> listaFormações = new ArrayList<>();
-        listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA,
-                (List<Conteúdo>) new Conteúdo(1456, "Lógica de programação com Java", 12, NivelConteudo.FÁCIL, StatusConteudo.PENDENTE)));
-        listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA,
-                (List<Conteúdo>) new Conteúdo(1478, "Criando um sistema de gerenciamento farmacêutico com Java", 15, NivelConteudo.INTERMEDIÁRIO, StatusConteudo.PENDENTE)));
+        List<Conteúdo> listaConteudos = new ArrayList<>();
+        listaConteudos.add(new Conteúdo(1456, "Lógica de programação com Java", 12, NivelConteudo.FÁCIL, StatusConteudo.PENDENTE));
+        listaConteudos.add(new Conteúdo(1478, "Criando um sistema de gerenciamento farmacêutico com Java", 15, NivelConteudo.INTERMEDIÁRIO, StatusConteudo.PENDENTE));
+        listaConteudos.add(new Conteúdo(1489, "Gerando uma API Rest com Spring Boot num sistema de gestão eleitoral na web", 15, NivelConteudo.INTERMEDIÁRIO, StatusConteudo.PENDENTE));
+        listaConteudos.add(new Conteúdo(1497, "Criando um sistema de mensageria na Cloud AWS com Quarkus e Apache Kafka", 18, NivelConteudo.AVANÇADO, StatusConteudo.PENDENTE));
 
-        listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA,
-                (List<Conteúdo>) new Conteúdo(1489, "Gerando uma API Rest com Spring Boot num sistema de gestão eleitoral na web", 15, NivelConteudo.INTERMEDIÁRIO, StatusConteudo.PENDENTE)));
-        listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA,
-                (List<Conteúdo>) new Conteúdo(1497, "Criando um sistema de mensageria na Cloud AWS com Quarkus e Apache Kafka", 18, NivelConteudo.AVANÇADO, StatusConteudo.PENDENTE)));
+        listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA, listaConteudos));
 
         return listaFormações;
     }
@@ -33,13 +31,14 @@ public class ConteudoServico {
         System.out.println("Desenvolvimento backend com Java.\n");
 
         for (Conteúdo conteúdo : formação.getConteúdoList()){
-            imprimeMensagem("Código : " + conteúdo.getId() +
-                            "Nome : " + conteúdo.getNome() +
-                            "Nível do conteúdo : " + conteúdo.getNivelConteudo() +
-                            "Status do conteúdo : " + conteúdo.getStatusConteudo());
+            imprimeMensagem("\nCódigo : " + conteúdo.getId() +
+                            "\nNome : " + conteúdo.getNome() +
+                            "\nNível do conteúdo : " + conteúdo.getNivelConteudo() +
+                            "\nStatus do conteúdo : " + conteúdo.getStatusConteudo());
         }
     }
     public static Conteúdo gerenciaConteudos(Usuário usuário, Formação formação){
+        defineConteudo(usuário, formação);
         Conteúdo idEncontrado = null;
         imprimeMensagem("Aqui você gerencia seus conteúdos da sua formação, não há restrição de nível, pode\n" +
                 "consumir da maneira que achar melhor, de tal modo que quando terminar, digite o código do conteúdo\n" +
