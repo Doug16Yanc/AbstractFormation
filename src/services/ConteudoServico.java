@@ -10,6 +10,7 @@ import enumerations.StatusFormação;
 import java.util.*;
 
 import static utils.Utilidade.imprimeMensagem;
+import static utils.Utilidade.sc;
 
 public class ConteudoServico {
 
@@ -28,7 +29,7 @@ public class ConteudoServico {
         return listaFormações;
     }
     public static void defineConteudo(Usuário usuário, Formação formação){
-        imprimeMensagem("Temos aqui a formação por conteúdos.\n O que voc}e tem a aprender\n");
+        imprimeMensagem("Temos aqui a formação por conteúdos.\n O que você tem a aprender:\n");
         System.out.println("Desenvolvimento backend com Java.\n");
 
         for (Conteúdo conteúdo : formação.getConteúdoList()){
@@ -37,5 +38,59 @@ public class ConteudoServico {
                             "Nível do conteúdo : " + conteúdo.getNivelConteudo() +
                             "Status do conteúdo : " + conteúdo.getStatusConteudo());
         }
+    }
+    public static Conteúdo gerenciaConteudos(Usuário usuário, Formação formação){
+        Conteúdo idEncontrado = null;
+        imprimeMensagem("Aqui você gerencia seus conteúdos da sua formação, não há restrição de nível, pode\n" +
+                "consumir da maneira que achar melhor, de tal modo que quando terminar, digite o código do conteúdo\n" +
+                "a fim de receber seu certificado.\n");
+        do{
+            System.out.println("Código do conteúdo ou -1 a fim de sair do loop:");
+            int id = sc.nextInt();
+
+            if (id == -1){
+                break;
+            }
+
+            for (Conteúdo conteúdo : formação.getConteúdoList()){
+                if (id == conteúdo.getId()){
+                    idEncontrado = conteúdo;
+                    break;
+                }
+            }
+            if (idEncontrado != null) {
+                if (idEncontrado.getStatusConteudo() != StatusConteudo.CONCLUÍDO){
+                    System.out.println("Conteúdo " + idEncontrado.getId() + ", " + idEncontrado.getNome() +
+                            " finalizado com sucesso.\n");
+                    idEncontrado.setStatusConteudo(StatusConteudo.CONCLUÍDO);
+                    listaFinalizados(idEncontrado);
+                    comprovaFimConteudo(usuário, idEncontrado);
+                }
+                else{
+                    System.out.println("Você já concluiu esse conteúdo.\n");
+                }
+            }
+            else{
+                System.out.println("Código não reconhecido.\n");
+            }
+        } while(true);
+        return idEncontrado;
+    }
+    private static void comprovaFimConteudo(Usuário usuário, Conteúdo conteúdo){
+        imprimeMensagem("Comprovamos que " + usuário.getNome() + " concluiu com sucesso o conteúdo de" +
+                " de " + conteúdo.getNome() + "com duração de " + conteúdo.getDuracao());
+    }
+    public static List<Conteúdo> listaFinalizados(Conteúdo conteúdo){
+        List<Conteúdo> conteudosFinalizados = new ArrayList<>();
+        conteudosFinalizados.add(conteúdo);
+        imprimeMensagem("Os conteúdos finalizados representam avanços extraordinários em sua carreira.\n");
+        for(Conteúdo conteudo : conteudosFinalizados){
+            System.out.println("Código : " + conteudo.getId() +
+                    "\n         Nome : " + conteudo.getNome() +
+                    "\n         Duração : " + conteudo.getDuracao() +
+                    "\n         Nível do conteúdo : " + conteudo.getNivelConteudo() +
+                    "\n         Status do conteúdo : " + conteudo.getStatusConteudo());
+        }
+        return conteudosFinalizados;
     }
 }

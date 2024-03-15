@@ -1,8 +1,14 @@
 package application;
 
+//Programa feito por Douglas Holanda
+//O programa realiza o gerenciamento de uma plataforma de estudos em programação
+//e tem como entidade única o usuário que realiza uma formação que contém vários
+//conteúdos, para ser mais metalinguístico, a formação é única e consiste em
+//dominar a linguagem Java para o desenvolvimento backend, de tal maneira que
+//os conteúdos são todos referentes à linguagem e suas tecnologias assim associadas.
+
 import entities.Formação;
 import enumerations.StatusFormação;
-import utils.Utilidade;
 
 import static services.FormacaoServico.realizaMatricula;
 import static services.UsuarioServico.fazerLogin;
