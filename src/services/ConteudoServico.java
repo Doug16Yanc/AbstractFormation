@@ -1,4 +1,41 @@
 package services;
 
+import entities.Conteúdo;
+import entities.Formação;
+import entities.Usuário;
+import enumerations.NivelConteudo;
+import enumerations.StatusConteudo;
+import enumerations.StatusFormação;
+
+import java.util.*;
+
+import static utils.Utilidade.imprimeMensagem;
+
 public class ConteudoServico {
+
+    public static List<Formação> armazenaConteudos(){
+        List<Formação> listaFormações = new ArrayList<>();
+        listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA,
+                (List<Conteúdo>) new Conteúdo(1456, "Lógica de programação com Java", 12, NivelConteudo.FÁCIL, StatusConteudo.PENDENTE)));
+        listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA,
+                (List<Conteúdo>) new Conteúdo(1478, "Criando um sistema de gerenciamento farmacêutico com Java", 15, NivelConteudo.INTERMEDIÁRIO, StatusConteudo.PENDENTE)));
+
+        listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA,
+                (List<Conteúdo>) new Conteúdo(1489, "Gerando uma API Rest com Spring Boot num sistema de gestão eleitoral na web", 15, NivelConteudo.INTERMEDIÁRIO, StatusConteudo.PENDENTE)));
+        listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA,
+                (List<Conteúdo>) new Conteúdo(1497, "Criando um sistema de mensageria na Cloud AWS com Quarkus e Apache Kafka", 18, NivelConteudo.AVANÇADO, StatusConteudo.PENDENTE)));
+
+        return listaFormações;
+    }
+    public static void defineConteudo(Usuário usuário, Formação formação){
+        imprimeMensagem("Temos aqui a formação por conteúdos.\n O que voc}e tem a aprender\n");
+        System.out.println("Desenvolvimento backend com Java.\n");
+
+        for (Conteúdo conteúdo : formação.getConteúdoList()){
+            imprimeMensagem("Código : " + conteúdo.getId() +
+                            "Nome : " + conteúdo.getNome() +
+                            "Nível do conteúdo : " + conteúdo.getNivelConteudo() +
+                            "Status do conteúdo : " + conteúdo.getStatusConteudo());
+        }
+    }
 }
