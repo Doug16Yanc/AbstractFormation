@@ -13,7 +13,8 @@ public class UsuarioServico {
         Usuário usuário = null;
         for (Usuário usuário1 : usuárioList){
             if (numero == usuário1.getId()){
-                usuário1 = usuário;
+                usuário = usuário1;
+                break;
             }
         }
         return usuário;
@@ -24,7 +25,7 @@ public class UsuarioServico {
         int id = sc.nextInt();
 
         Usuário usuário = procuraUsuario(id);
-
+        sc.nextLine();
         if (usuário != null){
             System.out.println("Entre com suas credenciais: ");
             System.out.println("Login : ");
@@ -32,7 +33,7 @@ public class UsuarioServico {
             System.out.println("Senha : ");
             String senha = sc.nextLine();
 
-            if(usuário.getLogin() == login && usuário.getSenha() == senha){
+            if(login.equals(usuário.getLogin()) && senha.equals(usuário.getSenha())){
                 System.out.println("Login realizado com sucesso.\n");
                 return true;
             }
@@ -61,10 +62,10 @@ public class UsuarioServico {
 
             switch(opcao){
                 case 1 -> {
-
+                    consultarDados(usuário);
                 }
                 case 2 -> {
-
+                    alterarDados(usuário);
                 }
                 case 3 -> {
 

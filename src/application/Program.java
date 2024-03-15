@@ -11,6 +11,9 @@ import static utils.Utilidade.sc;
 
 public class Program {
     public static void main(String[] args) {
+        fazPrimeiraInteraçao();
+    }
+    public static void fazPrimeiraInteraçao(){
         Formação formacao = new Formação("", 12, StatusFormação.NÃO_INICIADA, null);
         do {
             System.out.println("Já é cadastrado na plataforma?\n" +
