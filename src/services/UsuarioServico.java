@@ -5,6 +5,8 @@ import entities.Conteúdo;
 import entities.Formação;
 import entities.Usuário;
 
+import java.util.ArrayList;
+
 import static application.Program.fazPrimeiraInteraçao;
 import static services.ConteudoServico.gerenciaConteudos;
 import static services.ConteudoServico.listaFinalizados;
@@ -79,7 +81,7 @@ public class UsuarioServico {
                     gerenciaConteudos(usuário, formação);
                 }
                 case 4 -> {
-                    listaFinalizados((Conteúdo) formação.getConteúdoList());
+                    listaFinalizados(new ArrayList<>());
                 }
                 case 5 -> {
                     mostraCusto(usuário, formação);

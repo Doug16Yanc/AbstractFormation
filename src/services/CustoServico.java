@@ -16,17 +16,17 @@ public class CustoServico implements EuCalculo {
                 "você ganha descontos consecutivos em uma nova formação\n" +
                 "não gratuita que custa R$ 69.90 brutos.\n");
         System.out.println("Informações pertinentes.\n" +
-                            "   > Status da primeira formação escolhida : " + formação.getStatusFormação() +
-                            "   > Nível do usuário : " + usuário.getNivel() +
-                            "   > Custo de uma nova formação : R$ " + defineDesconto(usuário, custo, desconto));
+                            "\n   > Status da primeira formação escolhida : " + formação.getStatusFormação() +
+                            "\n   > Nível do usuário : " + usuário.getNivel() +
+                            "\n   > Custo de uma nova formação : R$ " + defineDesconto(usuário, custo, desconto));
     }
     public static double defineDesconto(Usuário usuário, Custo custo, double desconto){
         switch(usuário.getNivel()){
             case NICKEL -> {
-                 desconto = 0.25;
+                 desconto = 0.00;
             }
             case BRONZE -> {
-                desconto = 0.5;
+                desconto = 0.05;
             }
             case SILVER -> {
                 desconto = 0.1;

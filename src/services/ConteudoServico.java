@@ -15,7 +15,7 @@ import static utils.Utilidade.sc;
 
 public class ConteudoServico {
 
-    public static List<Formação> armazenaConteudos(){
+    public static List<Conteúdo> armazenaConteudos(){
         List<Formação> listaFormações = new ArrayList<>();
         List<Conteúdo> listaConteudos = new ArrayList<>();
         listaConteudos.add(new Conteúdo(1456, "Lógica de programação com Java", 12, NivelConteudo.FÁCIL, StatusConteudo.PENDENTE));
@@ -25,13 +25,14 @@ public class ConteudoServico {
 
         listaFormações.add(new Formação("Desenvolvimento Backend Java", 60, StatusFormação.INICIADA, listaConteudos));
 
-        return listaFormações;
+        return listaConteudos;
     }
     public static void defineConteudo(Usuário usuário, Formação formação){
+        List<Conteúdo> lista = armazenaConteudos();
         imprimeMensagem("Temos aqui a formação por conteúdos.\n O que você tem a aprender:\n");
         System.out.println("Desenvolvimento backend com Java.\n");
 
-        for (Conteúdo conteúdo : formação.getConteúdoList()){
+        for (Conteúdo conteúdo : lista){
             imprimeMensagem("\nCódigo : " + conteúdo.getId() +
                             "\nNome : " + conteúdo.getNome() +
                             "\nNível do conteúdo : " + conteúdo.getNivelConteudo() +
@@ -40,6 +41,8 @@ public class ConteudoServico {
     }
     public static Conteúdo gerenciaConteudos(Usuário usuário, Formação formação){
         defineConteudo(usuário, formação);
+        formação.setStatusFormação(StatusFormação.INICIADA);
+        List<Conteúdo> conteudosFinalizados = new ArrayList<>();
         Conteúdo idEncontrado = null;
         imprimeMensagem("Aqui você gerencia seus conteúdos da sua formação, não há restrição de nível, pode\n" +
                 "consumir da maneira que achar melhor, de tal modo que quando terminar, digite o código do conteúdo\n" +
@@ -52,7 +55,7 @@ public class ConteudoServico {
                 break;
             }
 
-            for (Conteúdo conteúdo : formação.getConteúdoList()){
+            for (Conteúdo conteúdo : armazenaConteudos()){
                 if (id == conteúdo.getId()){
                     idEncontrado = conteúdo;
                     break;
@@ -64,8 +67,8 @@ public class ConteudoServico {
                             " finalizado com sucesso.\n");
                     idEncontrado.setStatusConteudo(StatusConteudo.CONCLUÍDO);
                     aumentaNivel(usuário, idEncontrado);
-                    listaFinalizados(idEncontrado);
                     comprovaFimConteudo(usuário, idEncontrado);
+                    conteudosFinalizados.add(idEncontrado);
                 }
                 else{
                     System.out.println("Você já concluiu esse conteúdo.\n");
@@ -79,20 +82,17 @@ public class ConteudoServico {
     }
     private static void comprovaFimConteudo(Usuário usuário, Conteúdo conteúdo){
         imprimeMensagem("Comprovamos que " + usuário.getNome() + " concluiu com sucesso o conteúdo de" +
-                " de " + conteúdo.getNome() + "com duração de " + conteúdo.getDuracao());
+                " de " + conteúdo.getNome() + " com duração de " + conteúdo.getDuracao());
     }
-    public static List<Conteúdo> listaFinalizados(Conteúdo conteúdo){
-        List<Conteúdo> conteudosFinalizados = new ArrayList<>();
-        conteudosFinalizados.add(conteúdo);
+    public static void listaFinalizados(List<Conteúdo>conteudosFinalizados){
         imprimeMensagem("Os conteúdos finalizados representam avanços extraordinários em sua carreira.\n");
-        for(Conteúdo conteudo : conteudosFinalizados){
+        for (Conteúdo conteudo : conteudosFinalizados) {
             System.out.println("Código : " + conteudo.getId() +
                     "\n         Nome : " + conteudo.getNome() +
                     "\n         Duração : " + conteudo.getDuracao() +
                     "\n         Nível do conteúdo : " + conteudo.getNivelConteudo() +
                     "\n         Status do conteúdo : " + conteudo.getStatusConteudo());
         }
-        return conteudosFinalizados;
     }
     private static void aumentaNivel(Usuário usuário, Conteúdo conteúdo){
         if (conteúdo.getStatusConteudo() == StatusConteudo.CONCLUÍDO){
