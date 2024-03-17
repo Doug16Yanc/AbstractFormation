@@ -4,6 +4,7 @@ import entities.Conteúdo;
 import entities.Formação;
 import entities.Usuário;
 import enumerations.NivelConteudo;
+import enumerations.NivelUsuario;
 import enumerations.StatusConteudo;
 import enumerations.StatusFormação;
 
@@ -62,6 +63,7 @@ public class ConteudoServico {
                     System.out.println("Conteúdo " + idEncontrado.getId() + ", " + idEncontrado.getNome() +
                             " finalizado com sucesso.\n");
                     idEncontrado.setStatusConteudo(StatusConteudo.CONCLUÍDO);
+                    aumentaNivel(usuário, idEncontrado);
                     listaFinalizados(idEncontrado);
                     comprovaFimConteudo(usuário, idEncontrado);
                 }
@@ -91,5 +93,17 @@ public class ConteudoServico {
                     "\n         Status do conteúdo : " + conteudo.getStatusConteudo());
         }
         return conteudosFinalizados;
+    }
+    private static void aumentaNivel(Usuário usuário, Conteúdo conteúdo){
+        if (conteúdo.getStatusConteudo() == StatusConteudo.CONCLUÍDO){
+            switch(usuário.getNivel()){
+                case NICKEL -> usuário.setNivel(NivelUsuario.BRONZE);
+                case BRONZE -> usuário.setNivel(NivelUsuario.SILVER);
+                case SILVER -> usuário.setNivel(NivelUsuario.GOLD);
+                case GOLD -> usuário.setNivel(NivelUsuario.PLATINUM);
+                case PLATINUM -> usuário.setNivel(NivelUsuario.PLATINUM);
+                default -> usuário.getNivel();
+            }
+        }
     }
 }

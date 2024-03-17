@@ -46,7 +46,7 @@ public class FormacaoServico {
         System.out.println("Senha : ");
         String senha = sc.nextLine();
 
-        Usuário usuário = new Usuário(id, nome, email, login, senha, NivelUsuario.BRONZE, formacao);
+        Usuário usuário = new Usuário(id, nome, email, login, senha, NivelUsuario.NICKEL, formacao);
 
         usuárioList.add(usuário);
 

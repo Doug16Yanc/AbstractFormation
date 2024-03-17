@@ -1,10 +1,14 @@
 package services;
 
 import application.Program;
+import entities.Conteúdo;
 import entities.Formação;
 import entities.Usuário;
 
+import static application.Program.fazPrimeiraInteraçao;
 import static services.ConteudoServico.gerenciaConteudos;
+import static services.ConteudoServico.listaFinalizados;
+import static services.CustoServico.mostraCusto;
 import static services.FormacaoServico.usuárioList;
 import static utils.Utilidade.imprimeMensagem;
 import static utils.Utilidade.sc;
@@ -69,58 +73,88 @@ public class UsuarioServico {
                 }
                 case 2 -> {
                     alterarDados(usuário);
+                    saiu = true;
                 }
                 case 3 -> {
                     gerenciaConteudos(usuário, formação);
                 }
                 case 4 -> {
-
+                    listaFinalizados((Conteúdo) formação.getConteúdoList());
                 }
                 case 5 -> {
-
+                    mostraCusto(usuário, formação);
                 }
                 case 6 -> {
                     imprimeMensagem("Sua ausência é desoladora, espero que volte logo.\n");
-                    break;
+                    saiu = true;
                 }
                 default -> {
                     imprimeMensagem("Opção impossível.\n");
                 }
             }
+            if (saiu){
+                break;
+            }
         } while(true);
     }
     private static void consultarDados(Usuário usuário){
         imprimeMensagem("Aqui você pode consultar seus dados.\n" +
-                "       > Nome : " + usuário.getNome()  +
+                "\n     > Nome : " + usuário.getNome()  +
                 "\n     > Número identificador : " + usuário.getId() +
                 "\n     > Email : " + usuário.getEmail() +
                 "\n     > Nível usuário : " + usuário.getNivel());
     }
     private static boolean alterarDados(Usuário usuário){
+        sc.nextLine();
         System.out.println("Você pode alterar email, login e senha.\n");
-        System.out.println("E/e - Email\n" +
+        System.out.println("Realizaremos verificação em duas etapas.\n");
+        System.out.println("\n" +
+                "           E/e - Email\n" +
                 "           L/l - Login\n" +
                 "           S/s - Senha\n");
         String opcao = sc.nextLine();
 
         switch(opcao.toLowerCase()){
             case "e" -> {
-                System.out.println("Novo email:");
-                String novoEmail = sc.nextLine();
+                System.out.println("Digite seu email atual: ");
+                String email = sc.nextLine();
+                if (usuário.getEmail().equals(email)){
+                    System.out.println("Novo email:");
+                    String novoEmail = sc.nextLine();
+                    usuário.setEmail(novoEmail);
+                    System.out.println("Alteração de email realizada com sucesso, faça login novamente.\n");
 
-                usuário.setEmail(novoEmail);
+                }
+                else{
+                    System.out.println("Email não reconhecido.\n");
+                }
+
             }
             case "l" -> {
-                System.out.println("Novo login:");
-                String novoLogin = sc.nextLine();
-
-                usuário.setLogin(novoLogin);
+                System.out.println("Digite seu login atual: ");
+                String login = sc.nextLine();
+                if (usuário.getLogin().equals(login)) {
+                    System.out.println("Novo login:");
+                    String novoLogin = sc.nextLine();
+                    usuário.setLogin(novoLogin);
+                    System.out.println("Alteração de login realizada com sucesso, faça login novamente.\n");
+                }
+                else{
+                    System.out.println("Login não reconhecido.\n");
+                }
             }
             case "s" -> {
-                System.out.println("Nova senha:");
-                String novaSenha = sc.nextLine();
-
-                usuário.setSenha(novaSenha);
+                System.out.println("Digite sua senha atual: ");
+                String senha = sc.nextLine();
+                if (usuário.getSenha().equals(senha)) {
+                    System.out.println("Nova senha:");
+                    String novaSenha = sc.nextLine();
+                    usuário.setSenha(novaSenha);
+                    System.out.println("Alteração de senha realizada com sucesso, faça login novamente.\n");
+                }
+                else{
+                    System.out.println("Senha não reconhecida.\n");
+                }
             }
             default -> {
                 imprimeMensagem("Opção indisponível.\n");
@@ -128,5 +162,4 @@ public class UsuarioServico {
         }
         return true;
     }
-
 }
