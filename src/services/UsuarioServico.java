@@ -6,10 +6,10 @@ import entities.Formação;
 import entities.Usuário;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static application.Program.fazPrimeiraInteraçao;
-import static services.ConteudoServico.gerenciaConteudos;
-import static services.ConteudoServico.listaFinalizados;
+import static services.ConteudoServico.*;
 import static services.CustoServico.mostraCusto;
 import static services.FormacaoServico.usuárioList;
 import static utils.Utilidade.imprimeMensagem;
@@ -57,6 +57,7 @@ public class UsuarioServico {
         }
     }
     private static void lidaComUsuário(Usuário usuário, Formação formação){
+        List<Conteúdo> conteudosFinalizados = new ArrayList<>();
         boolean saiu = false;
         imprimeMensagem("Seja bem-vindo(a) à nossa plataforma, caríssimo(a) " + usuário.getNome() + "\n");
         do {
@@ -78,10 +79,10 @@ public class UsuarioServico {
                     saiu = true;
                 }
                 case 3 -> {
-                    gerenciaConteudos(usuário, formação);
+                    gerenciaConteudos(usuário, formação, conteudosFinalizados);
                 }
                 case 4 -> {
-                    listaFinalizados(new ArrayList<>());
+                    listaFinalizados(conteudosFinalizados);
                 }
                 case 5 -> {
                     mostraCusto(usuário, formação);

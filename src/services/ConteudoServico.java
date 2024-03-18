@@ -39,10 +39,9 @@ public class ConteudoServico {
                             "\nStatus do conteúdo : " + conteúdo.getStatusConteudo());
         }
     }
-    public static Conteúdo gerenciaConteudos(Usuário usuário, Formação formação){
+    public static Conteúdo gerenciaConteudos(Usuário usuário, Formação formação, List<Conteúdo> conteudosFinalizados){
         defineConteudo(usuário, formação);
         formação.setStatusFormação(StatusFormação.INICIADA);
-        List<Conteúdo> conteudosFinalizados = new ArrayList<>();
         Conteúdo idEncontrado = null;
         imprimeMensagem("Aqui você gerencia seus conteúdos da sua formação, não há restrição de nível, pode\n" +
                 "consumir da maneira que achar melhor, de tal modo que quando terminar, digite o código do conteúdo\n" +
@@ -81,8 +80,8 @@ public class ConteudoServico {
         return idEncontrado;
     }
     private static void comprovaFimConteudo(Usuário usuário, Conteúdo conteúdo){
-        imprimeMensagem("Comprovamos que " + usuário.getNome() + " concluiu com sucesso o conteúdo de" +
-                " de " + conteúdo.getNome() + " com duração de " + conteúdo.getDuracao());
+        imprimeMensagem("Comprovamos que " + usuário.getNome() + " concluiu com sucesso o conteúdo" +
+                " de " + conteúdo.getNome() + " com duração de " + conteúdo.getDuracao() + " horas.\n");
     }
     public static void listaFinalizados(List<Conteúdo>conteudosFinalizados){
         imprimeMensagem("Os conteúdos finalizados representam avanços extraordinários em sua carreira.\n");

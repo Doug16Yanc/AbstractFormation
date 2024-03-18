@@ -5,20 +5,25 @@ import entities.Formação;
 import entities.Usuário;
 import repositories.EuCalculo;
 
+import java.text.DecimalFormat;
+
 import static utils.Utilidade.imprimeMensagem;
 
 public class CustoServico implements EuCalculo {
 
     public static void mostraCusto(Usuário usuário, Formação formação){
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
         double desconto = 0.0;
         Custo custo = new Custo(69.90, desconto);
+        String valor = decimalFormat.format(defineDesconto(usuário, custo, desconto));
+
         imprimeMensagem("Olá, caro usuário, a cada avanço nos níveis,\n" +
                 "você ganha descontos consecutivos em uma nova formação\n" +
                 "não gratuita que custa R$ 69.90 brutos.\n");
         System.out.println("Informações pertinentes.\n" +
                             "\n   > Status da primeira formação escolhida : " + formação.getStatusFormação() +
                             "\n   > Nível do usuário : " + usuário.getNivel() +
-                            "\n   > Custo de uma nova formação : R$ " + defineDesconto(usuário, custo, desconto));
+                            "\n   > Custo de uma nova formação : R$ " + valor);
     }
     public static double defineDesconto(Usuário usuário, Custo custo, double desconto){
         switch(usuário.getNivel()){
